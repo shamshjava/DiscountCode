@@ -29,10 +29,10 @@ public class DiscountService {
 	@Autowired
 	OfferRepository offerRepo;
 	
-	public DiscountCode getDiscountCode(String name, String email) {
+	public Object getDiscountCode(String name, String email) {
 		Recipient rec = recipientRepo.findByemail(email);
 		if(rec != null)
-			return null;
+			return "Already Discount Code is generated for this Recipient";
 		addRecipient(name,email);
 		DiscountCode disCode = new DiscountCode();
 		disCode.setAssignedRecipient(email);
@@ -40,17 +40,26 @@ public class DiscountService {
 		String generatedCode = createRandomCode(codeLength);
 		disCode.setOfferCode(generatedCode);
 		disCode.setUsed(false);
-		discountRepo.save(disCode);
-		addOffer(generatedCode);
-		return disCode;
+		DiscountCode disCodeNew = discountRepo.save(disCode);
+		Offer offer1 = null;
+		if(disCodeNew != null)
+			 offer1 = addOffer(generatedCode);
+		if(offer1 == null)
+			return null;
+		else
+			return disCode;
 	}
 
-	private void addOffer(String generatedCode) {
+	private Offer addOffer(String generatedCode) {
 
 		Offer offer = new Offer();
 		offer.setOfferName(generatedCode);
 		offer.setPercentage(assignPercentage());
-		offerRepo.save(offer);
+		Offer offerNew = offerRepo.save(offer);
+		if(offerNew == null)
+			return null;
+		else
+			return offerNew;
 	}
 
 	private int assignPercentage() {
@@ -84,16 +93,20 @@ public class DiscountService {
 		
 	}
 
-	public int getgetDiscountCode(String email, String discountCode) {
+	public Object getgetDiscountCode(String email, String discountCode) {
 		int percentage = 0;
 		DiscountCode disCode = discountRepo.findByassignedRecipient(email);
 		if(disCode != null) {
 			disCode.setUsed(true);
 			disCode.setUsedDate(new Date());
 			Offer offer = offerRepo.findByofferName(disCode.getOfferCode());
-			percentage = offer.getPercentage();
-			System.out.println("percentage="+percentage);
+			if(offer.getOfferName().equals(discountCode))
+				percentage = offer.getPercentage();
+			else
+				return "Invalid Offer Code";
 			discountRepo.save(disCode);
+		}else {
+			return "Invalid Recipient";
 		}
 		return percentage;
 	}
