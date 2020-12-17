@@ -30,6 +30,9 @@ public class DiscountService {
 	OfferRepository offerRepo;
 	
 	public DiscountCode getDiscountCode(String name, String email) {
+		Recipient rec = recipientRepo.findByemail(email);
+		if(rec != null)
+			return null;
 		addRecipient(name,email);
 		DiscountCode disCode = new DiscountCode();
 		disCode.setAssignedRecipient(email);

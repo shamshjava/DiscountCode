@@ -2,6 +2,7 @@ package com.discount.model;
 
 import java.util.Date;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class DiscountCode {
 	
 	@Id
-	private int id;
+	private ObjectId  id;
 	private String offerCode;
 	private String assignedRecipient;
 	private Date expirationDate;
@@ -17,10 +18,10 @@ public class DiscountCode {
 	private Date usedDate;
 	
 	
-	public int getId() {
+	public ObjectId getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 	public String getOfferCode() {

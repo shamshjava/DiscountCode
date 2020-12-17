@@ -6,4 +6,6 @@ import com.discount.model.Recipient;
 
 public interface RecipientRepository extends MongoRepository<Recipient, Integer>{
 
+	Recipient findByemail(String email);
+
 }
