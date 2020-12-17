@@ -1,5 +1,6 @@
 package com.discount.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,17 +9,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Recipient {
 	
 	@Id
-	private int id;
+	private ObjectId id;
 	private String name;
 	@Indexed(unique = true)
 	private String email;
 	
 	
 	
-	public int getId() {
+	public ObjectId getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 	public String getName() {

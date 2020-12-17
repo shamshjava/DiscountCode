@@ -1,5 +1,6 @@
 package com.discount.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,15 +8,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Offer {
 	
 	@Id
-	private int id;
+	private ObjectId id;
 	private String offerName;
 	private int percentage;
 	
 	
-	public int getId() {
+	public ObjectId getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 	public String getOfferName() {
